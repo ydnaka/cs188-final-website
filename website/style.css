@@ -1,0 +1,197 @@
+body {
+  background-color: #220000;
+  background-image: url("366743.png");
+  background-repeat: repeat;
+  background-size: auto;
+  background-size: 64px 64px;
+  background-attachment: fixed;
+  animation: diagScroll 12s linear infinite;
+}
+
+html, body, a, a.hover {
+cursor: url("wooper.png"), auto;
+}
+
+::selection {
+    background-color: #8b0000;
+    color: #fff;
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+    color: yellow;
+  }
+
+li {
+  text-shadow:
+  -1px -1px 0 magenta,
+  1px -1px 0 magenta,
+  -1px  1px 0 magenta,
+  1px  1px 0 magenta;
+}
+
+h1 {
+  text-shadow:
+  -2px -2px 0 magenta,
+  2px -2px 0 magenta,
+  -1px  2px 0 magenta,
+  2px  2px 0 magenta;
+  font-size: 50px;
+  text-align: center;
+}
+h2  {
+  text-align: center;
+  text-shadow:
+  -1px -1px 0 magenta,
+  1px -1px 0 magenta,
+  -1px  1px 0 magenta,
+  1px  1px 0 magenta;
+}
+p {
+  text-shadow:
+  -1px -1px 0 magenta,
+  1px -1px 0 magenta,
+  -1px  1px 0 magenta,
+  1px  1px 0 magenta;
+  text-align: center;
+}
+a{
+color: rgb(0, 255, 170);
+}
+a:hover{
+background: linear-gradient(
+    #ff9634,
+    #e63a24
+  );;
+color: purple;
+}
+header{
+  display: flex;
+background-color: red;
+border-radius: 6px;
+position: relative;
+z-index: 0;
+}
+header a{
+  display: flex;
+  color: white;
+padding: 20px;
+border-radius: 6px;
+position: relative;
+z-index: 1;
+overflow: visible;
+}
+footer{
+  margin-left:auto;
+  margin-right:auto;
+}
+footer a{
+padding-left: 20px;
+padding-right: 20px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border: 3px solid transparent;
+  padding: 3px;
+  border-radius: 6px;
+}
+
+/*https://stackoverflow.com/questions/54702124/rainbow-text-animation-using-only-css*/
+.rainbow {
+    text-decoration: underline;
+    text-shadow: none;
+}
+.rainbow_text_animated {
+    background: linear-gradient(to right, yellow, #0099ff , #00ff00, #ff3399, yellow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 12s linear infinite;
+    background-size: 20% 100%;
+}
+
+@keyframes rainbow_animation {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+/* Rainbow border wrapper: apply to ANY element */
+.rainbow-border {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated rainbow layer */
+.rainbow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    to right,
+    #6666ff,
+    #0099ff,
+    #00ff00,
+    #ff3399,
+    #6666ff
+  );
+  background-size: 20% 100%;
+  animation: rainbow_animation 12s linear infinite;
+
+  z-index: -1;
+
+  /* Mask so rainbow only appears as border */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+header a:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;                /* stay inside the element */
+  border-radius: inherit;
+  padding: 3px;            /* border thickness INSIDE the box */
+  pointer-events: none;
+
+  background: linear-gradient(
+    to right,
+    rgb(0, 255, 170),
+    #0099ff,
+    #00ff00,
+    #ff3399,
+    rgb(0, 255, 170)
+  );
+  background-size: 60% 100%;
+  animation: rainbow_animation 12s linear infinite;
+
+  z-index: 0;
+
+  /* Mask so only the border inside padding shows */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+@keyframes diagScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -64px -128px; /* moves up-left */
+  }
+}

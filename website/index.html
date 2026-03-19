@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<title>CS 188 Final Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1>CS 188 Final Project</h1>
+<h2>by Andy Kasbarian</h2>
+<hr>
+
+<h2 class="rainbow rainbow_text_animated">Project Details</h2>
+<p>Based on the <a href="https://github.com/HoldenGs/cs188-cabinet-door-project">OpenCabinet</a> project by Holden Grissett, this project is a variation of the default final project that attempts to use the PandaOmron robot in the RoboCasa environment to open cabinet doors.</p>
+<p>The project tries to improve on the imitation learning model that is trained by the neural network using an incremental approach.</p>
+<br>
+<p>Opening cabinet doors is a difficult task for a few reasons:</p>
+<p>★ The state representation is small, even in the augmented dataset</p>
+<p>★ There are over 2500 possible kitchen layouts the robot could encounter</p>
+<p>★ The reward is sparse (either 0 or 1, no partial credit)</p>
+<br>
+<p>For this reason, the goal and success criteria was not to open the cabinet door, but to see how much we could improve using a low-dimensional state representation just by tweaking the policy, and how much improvement came from each step.</p>
+<hr>
+
+<h2 class="rainbow rainbow_text_animated">Incremental Approach:</h2>
+<p>The baseline MLP has a success rate of 0%, so I wanted to improve it.</p>
+<br>
+<p>The improvement plan consisted of:</p>
+<p>★ Augmenting the dataset with additional state information</p>
+<p>★ Adding temporal context, so the model sees previous states during training (6a)</p>
+<p>★ Adding action chunking, so the model predicts a sequence of future actions instead of one action (6b)</p>
+<p>★ Adding diffusion to the MLP policy (6c)</p>
+<p>★ Switching the policy from MLP to a 1-D convolutional U-Net (6d)</p>
+<hr>
+
+<h2 class="rainbow rainbow_text_animated">Results:</h2>
+<p>Not good. Even U-Net couldn't pass a single test case.</p>
+<p>Training this policy takes around <b>THREE HOURS</b> so making small tweaks and trying again is very infeasible.</p>
+<p>Using a low-dimensional state representation is not so good for this task.</p>
+<p>Modifications in the input state such as using visual data may have helped the robot gain much better results.</p>
+<br>
+<p>But we at least learned what model works best, and that is definitely the <b>U-Net with Diffusion</b> (6d), though MLP with action chunking (6b) had comparable results.</p>
+<p>U-Net with Diffusion moves towards the handle at first, but then goes off task entirely.</p>
+<p>There is not much we can do to help without completely overhauling the input state structure!</p>
+<br>
+<p>Note that policy 6a has a bug that makes it move backwards. This is because when first adding temporal context, the prior states were clones of the first state, and not zero-padded. In future policies, they are zero-padded.</p>
+<hr>
+
+<h2 class="rainbow rainbow_text_animated">Video demonstrations:</h2>
+<p>These are the results of the project. Policies 6d and 6b seem to show the most improvement, even if none of them was able to open the door.</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/cabinet_random_rollouts.mp4" type="video/mp4">
+    </video>
+    <p>Random Actions</p>
+  </div>
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/rollout_baseline.mp4" type="video/mp4">
+    </video>
+    <p>Baseline MLP</p>
+  </div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/rollout_06a.mp4" type="video/mp4">
+    </video>
+    <p>MLP with Temporal Context (6a)</p>
+  </div>
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/rollout_06b.mp4" type="video/mp4">
+    </video>
+    <p>MLP Temporal + Action Chunking (6b)</p>
+  </div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/rollout_06c.mp4" type="video/mp4">
+    </video>
+    <p>MLP with Diffusion (6c)</p>
+  </div>
+  <div>
+    <video width="100%" autoplay loop muted playsinline>
+      <source src="videos/rollout_06d.mp4" type="video/mp4">
+    </video>
+    <p>1D U-Net with Diffusion (6d)</p>
+  </div>
+</div>
+<hr>
+
+<footer class="center rainbow-border">
+    <h2>Resources:</h2>
+    <a href="https://github.com/ydnaka/cs188-final-project" target="_blank">GitHub Codebase</a>
+    <a href="report.pdf" target="_blank">My report</a>
+    <a href="https://diffusion-policy.cs.columbia.edu/" target="_blank">Chi et al., 2023</a>
+    <a href="https://arxiv.org/abs/2304.13705" target="_blank">Zhao et al., 2023</a>
+</footer>
+
+
+</body>
